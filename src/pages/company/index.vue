@@ -7,6 +7,7 @@
         <th>順位</th>
         <th>会社名</th>
         <th>スコア</th>
+        <th>人数</th>
       </tr>
     </thead>
     <tbody>
@@ -14,6 +15,7 @@
         <th>{{index + 1}}</th>
         <td>{{ score.name}}</td>
         <td>{{ score.score}}</td>
+        <td>{{ score.people}}</td>
       </tr>
     </tbody>
   </div>
@@ -28,7 +30,7 @@ export default {
   },
   async mounted() {
     try {
-      const snapshot = await this.$fire.firestore.collection("ranking-of-company").orderBy('score', 'desc').orderBy('created_at', 'asc')
+      const snapshot = await this.$fire.firestore.collection("ranking-of-company").orderBy('score', 'desc').orderBy('people', 'desc').orderBy('created_at', 'asc')
       snapshot.onSnapshot(querySnapshot => {
         this.scores = querySnapshot.docs.map(d => d.data())
       })
